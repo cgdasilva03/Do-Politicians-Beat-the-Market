@@ -187,3 +187,29 @@ print(df[
 # Display transaction counts by asset type
 print("\nTransactions by asset type:")
 print(df["Asset_Type"].value_counts(dropna=False))
+
+print("\nTransactions extracted per filing:")
+
+filing_counts = (
+    df.groupby("Filing_ID")
+    .size()
+    .sort_values(ascending=False)
+)
+
+print(filing_counts)
+
+print("\nNumber of reports processed:", df["Filing_ID"].nunique())
+
+print("\nReports with no extracted transactions:")
+
+downloaded_reports = {
+    path.stem
+    for path in PDF_FOLDER.glob("*.pdf")
+}
+
+processed_reports = set(df["Filing_ID"].unique())
+
+missing_reports = downloaded_reports - processed_reports
+
+print(sorted(missing_reports))
+print("Reports without extracted transactions:", len(missing_reports))
