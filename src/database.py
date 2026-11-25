@@ -58,5 +58,8 @@ def create_database():
     print("Database Created")
     print(f"Database location: {DB_PATH}")
 
+
 if __name__ == "__main__":
     create_database()
+
+
